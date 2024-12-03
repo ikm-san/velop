@@ -6,14 +6,14 @@ Velop WRT Pro 7にて動作検証済みのサンプルスクリプト集です�
 ２台のVelop WRT Pro 7を繋ぐための設定スクリプトです。6GHz帯をバックホールにしてWiFiを拡張する一番シンプルな方法です。  
 親機側の設定は特にありません。子機側にターミナルでSSH接続して、以下のスクリプトを実行してください。
 ```
-curl -sS -o /tmp/wds_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/wds/wds_setup.sh && sh /tmp/wds_setup.sh -v
+curl -sS -o /tmp/wds_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/wds_setup.sh && sh /tmp/wds_setup.sh -v
 ```
 
   ## ■ 広告ブロック導入スクリプト
 ブラウザの広告表示を９割近くブロックします。adblock導入後はスマホ等のすべての接続デバイスで効果を発揮します。  
 ビジネスや教育の現場で集中したい／させたい場合や、子供に見せたくないゲーム・マンガ広告を極力グレーアウトします。
 ```
-curl -sS -o /tmp/adb_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/adb/adb_setup.sh && sh /tmp/adb_setup.sh -v
+curl -sS -o /tmp/adb_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/adb_setup.sh && sh /tmp/adb_setup.sh -v
 ```
 
 
@@ -22,7 +22,7 @@ curl -sS -o /tmp/adb_setup.sh https://raw.githubusercontent.com/ikm-san/velop/ma
 完全にコントロールを切るとルーターのIPアドレスを見失ったときに困るので、IPアドレスを指定して残すようにしました。  
 再起動後も指定したIPアドレスでWEB管理画面へのログインおよびSSH接続が可能です。ダメな場合は初期化してください。
 ```
-curl -sS -o /tmp/dumb_ap_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/dumb_ap/dumb_ap_setup.sh && sh /tmp/dumb_ap_setup.sh -v
+curl -sS -o /tmp/dumb_ap_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/dumb_ap_setup.sh && sh /tmp/dumb_ap_setup.sh -v
 ```
   
 ## ■ ターミナルへの入り方
