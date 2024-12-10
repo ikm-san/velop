@@ -84,6 +84,9 @@ uci del wireless.ath10.wds='1'
 uci del wireless.ath20.wds='1'
 uci set wireless.ath10.mld='mld0'
 uci set wireless.ath20.mld='mld0'
+uci set wireless.ath00.disassoc_low_ack='0'
+uci set wireless.ath10.disassoc_low_ack='0'
+uci set wireless.ath20.disassoc_low_ack='0'
 
 # Disable and stop unnecessary services
 /etc/init.d/firewall disable && /etc/init.d/firewall stop
