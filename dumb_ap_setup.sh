@@ -44,7 +44,7 @@ if [ "$confirmation" != "y" ]; then
     exit 1
 fi
 
-# Apply UCI settings with user input
+# Apply UCI settings
 uci set wireless.mld0.ml_ssid="$SSID"
 uci set wireless.mld1.ml_ssid="$SSID"
 uci del network.globals.ula_prefix
@@ -56,10 +56,10 @@ uci del dhcp.lan.start
 uci del dhcp.lan.limit
 uci del dhcp.lan.leasetime
 uci del dhcp.lan.force
-uci set dhcp.lan.ndp='relay'
-uci set dhcp.lan.ra='relay'
+uci del dhcp.lan.ndp
+uci del dhcp.lan.ra
+uci del dhcp.lan.dhcpv6
 uci del dhcp.lan.ra_management
-uci set dhcp.lan.dhcpv6='relay'
 uci set dhcp.lan.ignore='1'
 uci set network.lan.ipaddr="$DumbAPIPaddr"
 uci set network.lan.gateway="$GatewayIPaddr"
@@ -93,6 +93,11 @@ uci set network.lan.ifname='eth0 eth1 eth2 eth3 eth4'
 
 # Commit changes
 uci commit
+
+# Persist proxy NDP settings
+echo "net.ipv6.conf.eth4.proxy_ndp=0" >> /etc/sysctl.conf
+echo "net.ipv6.conf.br-lan.proxy_ndp=0" >> /etc/sysctl.conf
+sysctl -p
 
 echo "Dumb AP Configuration applied successfully. Please reboot the router."
 echo "Dumb APの設定が完了しました。再起動を実行してください。"
