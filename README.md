@@ -1,21 +1,20 @@
-# Linksys Velop WRT Pro 7 サンプルスクリプト集
+# OpenWrt搭載 Linksys Velop WRT Pro 7 サンプルスクリプト集
 
 Velop WRT Pro 7にて動作検証済みのサンプルスクリプト集です。
   
-## ■ WDS子機設定導入スクリプト
+## ■ WDS子機として設定するスクリプト
 ２台のVelop WRT Pro 7を繋ぐための設定スクリプトです。6GHz帯をバックホールにしてWiFiを拡張する一番シンプルな方法です。  
 親機側の設定は特にありません。子機側にターミナルでSSH接続して、以下のスクリプトを実行してください。
 ```
 curl -sS -o /tmp/wds_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/wds_setup.sh && sh /tmp/wds_setup.sh -v
 ```
 
-  ## ■ 広告ブロック導入スクリプト
+## ■ 広告ブロック導入スクリプト
 ブラウザの広告表示を９割近くブロックします。adblock導入後はスマホ等のすべての接続デバイスで効果を発揮します。  
 ビジネスや教育の現場で集中したい／させたい場合や、子供に見せたくないゲーム・マンガ広告を極力グレーアウトします。
 ```
 curl -sS -o /tmp/adb_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/adb_setup.sh && sh /tmp/adb_setup.sh -v
 ```
-
 
 ## ■ ワイヤレスアクセスポイント・ブリッジモード設定導入スクリプト
 ワイヤレスアクセスポイント・ブリッジモードとして設定するスクリプトです。OpenWrt界隈ではDumb APと呼ばれます。  
