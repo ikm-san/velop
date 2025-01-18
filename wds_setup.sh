@@ -129,9 +129,9 @@ uci set wireless.ath21.network='lan'
 
 uci commit
 
-echo "net.ipv6.conf.eth4.proxy_ndp=0" >> /etc/sysctl.conf
-echo "net.ipv6.conf.br-lan.proxy_ndp=0" >> /etc/sysctl.conf
-sysctl -p
+echo "net.ipv6.conf.eth4.proxy_ndp=0" >> /etc/sysctl.conf 2>/dev/null
+echo "net.ipv6.conf.br-lan.proxy_ndp=0" >> /etc/sysctl.conf 2>/dev/null
+sysctl -p >/dev/null 2>&1
 
 echo ""
 echo "WDS Child Configuration applied successfully. Please reboot the router."

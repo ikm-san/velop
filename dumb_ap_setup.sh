@@ -46,7 +46,6 @@ fi
 
 # We only need the first two digits to distinguish 19 from 21+
 OS_VERSION=$(awk -F"'" '/DISTRIB_RELEASE/{print substr($2,1,2)}' /etc/openwrt_release 2>/dev/null | grep -oE '[0-9]+')
-echo "Detected OpenWrt major version: $OS_VERSION"
 
 uci set system.@system[0].zonename='Asia/Tokyo'
 uci set system.@system[0].timezone='JST-9'
@@ -109,9 +108,9 @@ fi
 
 uci commit
 
-echo "net.ipv6.conf.eth4.proxy_ndp=0" >> /etc/sysctl.conf
-echo "net.ipv6.conf.br-lan.proxy_ndp=0" >> /etc/sysctl.conf
-sysctl -p
+echo "net.ipv6.conf.eth4.proxy_ndp=0" >> /etc/sysctl.conf 2>/dev/null
+echo "net.ipv6.conf.br-lan.proxy_ndp=0" >> /etc/sysctl.conf 2>/dev/null
+sysctl -p >/dev/null 2>&1
 
 echo ""
 echo "Dumb AP Configuration applied successfully. Please reboot the router."
