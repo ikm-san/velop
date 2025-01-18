@@ -49,9 +49,9 @@ OS_VERSION=$(awk -F"'" '/DISTRIB_RELEASE/{print substr($2,1,2)}' /etc/openwrt_re
 
 uci set system.@system[0].zonename='Asia/Tokyo'
 uci set system.@system[0].timezone='JST-9'
-uci set system.@system[0].hostname='WifiAP'
-uci set network.lan.proto='static'
+uci set system.@system[0].hostname='WifiAP2'
 
+uci set network.lan.proto='static'
 uci set network.lan.ipaddr="$ChildIPaddr"
 uci set network.lan.netmask='255.255.255.0'
 uci set network.lan.gateway="$ParentIPaddr"
