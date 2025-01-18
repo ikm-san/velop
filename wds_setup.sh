@@ -44,59 +44,74 @@ if [ "$confirmation" != "y" ]; then
     exit 1
 fi
 
-# Apply UCI settings with user input
-uci set wireless.mld0.ml_ssid="$ParentSSID"
-uci set wireless.mld1.ml_ssid="$ParentSSID"
-uci del network.globals.ula_prefix
+# We only need the first two digits to distinguish 19 from 21+
+OS_VERSION=$(awk -F"'" '/DISTRIB_RELEASE/{print substr($2,1,2)}' /etc/openwrt_release 2>/dev/null | grep -oE '[0-9]+')
+
 uci set system.@system[0].zonename='Asia/Tokyo'
 uci set system.@system[0].timezone='JST-9'
+uci set system.@system[0].hostname='WifiAP'
+uci set network.lan.proto='static'
+
+uci set network.lan.ipaddr="$ChildIPaddr"
+uci set network.lan.netmask='255.255.255.0'
+uci set network.lan.gateway="$ParentIPaddr"
+uci delete network.lan.ip6assign 2>/dev/null
 uci set network.lan.stp='1'
 uci set network.lan.igmp_snooping='1'
-uci del dhcp.lan.start
-uci del dhcp.lan.limit
-uci del dhcp.lan.leasetime
-uci del dhcp.lan.force
-uci set dhcp.lan.ndp='relay'
-uci set dhcp.lan.ra='relay'
-uci del dhcp.lan.ra_management
-uci set dhcp.lan.dhcpv6='relay'
+
 uci set dhcp.lan.ignore='1'
-uci del network.wan
-uci del network.wan6
-uci set network.lan.ipaddr="$ChildIPaddr"
-uci set network.lan.gateway="$ParentIPaddr"
-uci del network.lan.ip6assign
-uci del wireless.wifi2.disabled
-uci set wireless.ath20.ssid="$ParentSSID"
-uci set wireless.ath20.key="$ParentSSIDkey"
-uci del wireless.ath20.sae_password
-uci add_list wireless.ath20.sae_password="$ParentSSIDkey"
-uci set wireless.ath10.ssid="$ParentSSID"
-uci set wireless.ath10.key="$ParentSSIDkey"
-uci del wireless.ath10.sae_password
-uci add_list wireless.ath10.sae_password="$ParentSSIDkey"
+uci delete dhcp.lan.start 2>/dev/null
+uci delete dhcp.lan.limit 2>/dev/null
+uci delete dhcp.lan.leasetime 2>/dev/null
+uci delete dhcp.lan.force 2>/dev/null
+uci delete dhcp.lan.ndp 2>/dev/null
+uci delete dhcp.lan.ra 2>/dev/null
+uci delete dhcp.lan.dhcpv6 2>/dev/null
+uci delete dhcp.lan.ra_management 2>/dev/null
+uci delete dhcp.lan.ra_slaac 2>/dev/null
+
+uci delete network.wan 2>/dev/null
+uci delete network.wan6 2>/dev/null
+uci delete dhcp.wan 2>/dev/null
+
+PORTS='eth0 eth1 eth2 eth3 eth4'
+
+if [ "$OS_VERSION" = "19" ]; then
+    uci set network.lan.ifname="$PORTS"
+else
+    uci set network.lan.device='br-lan' 2>/dev/null
+    uci set network.lan.type='bridge'    2>/dev/null
+    uci set network.br_lan='device'      2>/dev/null
+    uci set network.br_lan.type='bridge' 2>/dev/null
+    uci set network.br_lan.name='br-lan' 2>/dev/null
+    uci set network.br_lan.ports="$PORTS"
+fi
+
+uci set wireless.mld0.ml_ssid="$ParentSSID"
+uci set wireless.mld1.ml_ssid="$ParentSSID"
 uci set wireless.ath00.ssid="$ParentSSID"
 uci set wireless.ath00.key="$ParentSSIDkey"
-uci del wireless.ath00.sae_password
+uci delete wireless.ath00.sae_password 2>/dev/null
 uci add_list wireless.ath00.sae_password="$ParentSSIDkey"
-uci del wireless.ath00.wds='1'
-uci del wireless.ath10.wds='1'
-uci del wireless.ath20.wds='1'
-uci set wireless.ath10.mld='mld0'
-uci set wireless.ath20.mld='mld0'
-uci set wireless.ath00.disassoc_low_ack='0'
-uci set wireless.ath10.disassoc_low_ack='0'
-uci set wireless.ath20.disassoc_low_ack='0'
+uci delete wireless.ath00.wds 2>/dev/null
 
-# Disable and stop unnecessary services
-/etc/init.d/firewall disable && /etc/init.d/firewall stop
-/etc/init.d/dnsmasq disable && /etc/init.d/dnsmasq stop
-/etc/init.d/odhcpd disable && /etc/init.d/odhcpd stop
+uci set wireless.ath10.ssid="$ParentSSID"
+uci set wireless.ath10.key="$ParentSSIDkey"
+uci delete wireless.ath10.sae_password 2>/dev/null
+uci add_list wireless.ath10.sae_password="$ParentSSIDkey"
+uci delete wireless.ath10.wds 2>/dev/null
 
-# Additional wireless settings
+uci set wireless.ath20.ssid="$ParentSSID"
+uci set wireless.ath20.key="$ParentSSIDkey"
+uci delete wireless.ath20.sae_password 2>/dev/null
+uci add_list wireless.ath20.sae_password="$ParentSSIDkey"
+uci delete wireless.ath20.wds 2>/dev/null
+
+# WDS interface (ath21)
 uci set wireless.ath21=wifi-iface
 uci set wireless.ath21.ifname='ath21'
 uci set wireless.ath21.ssid="$ParentSSID"
+uci delete wireless.ath21.sae_password 2>/dev/null
 uci add_list wireless.ath21.sae_password="$ParentSSIDkey"
 uci set wireless.ath21.key="$ParentSSIDkey"
 uci set wireless.ath21.device='wifi2'
@@ -108,16 +123,22 @@ uci set wireless.ath21.mode='sta'
 uci set wireless.ath21.encryption='ccmp'
 uci set wireless.ath21.network='lan'
 
-# Commit changes
+/etc/init.d/firewall disable 2>/dev/null && /etc/init.d/firewall stop 2>/dev/null
+/etc/init.d/dnsmasq disable 2>/dev/null && /etc/init.d/dnsmasq stop 2>/dev/null
+/etc/init.d/odhcpd disable 2>/dev/null && /etc/init.d/odhcpd stop 2>/dev/null
+
 uci commit
 
+echo "net.ipv6.conf.eth4.proxy_ndp=0" >> /etc/sysctl.conf
+echo "net.ipv6.conf.br-lan.proxy_ndp=0" >> /etc/sysctl.conf
+sysctl -p
+
+echo ""
 echo "WDS Child Configuration applied successfully. Please reboot the router."
 echo "WDSの子機設定が完了しました。再起動を実行してください。"
 
 # Prompt the user for confirmation to reboot
 read -p "再起動を実行しますか？(N/y): " choice
-
-# Handle the user's input for reboot
 if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
     echo "Rebooting the system..."
     /sbin/reboot
