@@ -1,4 +1,4 @@
-# OpenWrt搭載 Linksys Velop WRT Pro 7 サンプルスクリプト集
+# OpenWrt | Linksys Velop WRT Pro 7 スクリプト集
 
 Velop WRT Pro 7にて動作検証済みのサンプルスクリプト集です。
   
