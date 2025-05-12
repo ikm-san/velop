@@ -90,6 +90,17 @@ uci set adblock.global.adb_forcedns='1'
 uci commit dhcp
 /etc/init.d/dnsmasq restart
 
+# Add t.co to whitelist
+echo "t.co" >> /etc/adblock/adblock.whitelist
+
+# Add *.nhk related sites to blacklist for kids
+cat <<EOF >> /etc/adblock/adblock.blacklist
+nhk.or.jp
+nhk.jp
+*.nhk.or.jp
+*.nhk.jp
+EOF
+
 # Define the cron job command
 cron_job="50 3 * * * /etc/init.d/adblock reload"
 
