@@ -37,8 +37,12 @@ opkg install --force-downgrade --force-depends kmod-crypto-lib-curve25519_*.ipk
 opkg install --force-downgrade --force-depends kmod-wireguard_*.ipk
 opkg install --force-downgrade wireguard-tools_*.ipk
 
+echo "Installing LuCI WireGuard protocol support..."
+opkg update
+opkg install luci-proto-wireguard
+
 cd /
 rm -rf $TMP_DIR
 
 echo "WireGuard installation completed"
-echo "Configure via /etc/config/network"
+echo "Configure via LuCI web interface or /etc/config/network"
