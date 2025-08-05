@@ -8,3 +8,7 @@ opkg install wireguard_1.0.20220627-2_arm_cortex-a7_neon-vfpv4.ipk
 
 ＃これらはlistからでＯＫ
 opkg install libqrencode qrencode luci-proto-wireguard luci-app-wireguard
+
+# Wireguard_setup.sh
+いい感じにサクッと設定してQRコードを表示してくれます。
+例えばiPhoneで読み取って、WireguardアプリのVPN設定に流し込んでください。
