@@ -99,6 +99,8 @@ nhk.or.jp
 nhk.jp
 *.nhk.or.jp
 *.nhk.jp
+*.nhk
+*.nhk-cs.jp
 EOF
 
 # Define the cron job command
