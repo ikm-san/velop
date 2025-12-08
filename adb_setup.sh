@@ -96,11 +96,20 @@ echo "t.co" >> /etc/adblock/adblock.whitelist
 # Add *.nhk related sites to blacklist for kids
 cat <<EOF >> /etc/adblock/adblock.blacklist
 nhk.or.jp
+www.nhk.or.jp
 nhk.jp
 *.nhk.or.jp
 *.nhk.jp
-*.nhk
 *.nhk-cs.jp
+*.web.nhk
+www.web.nhk
+api.nhk.or.jp
+tvapi.nhk.or.jp
+service.nhk.or.jp
+track.nhk.or.jp
+www3.nhk.or.jp
+www2.nhk.or.jp
+www1.nhk.or.jp
 EOF
 
 # Define the cron job command
