@@ -45,6 +45,7 @@ retry_install() {
 retry_update_opkg || exit 1
 retry_install adblock 
 retry_install luci-app-adblock
+retry_install luci-i18n-adblock-ja
 
 # Add TOFU filter
 cd /etc/adblock

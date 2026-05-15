@@ -2,6 +2,13 @@
 
 Velop WRT Pro 7にて動作検証済みのサンプルスクリプト集です。
   
+## ■ LuCI日本語化スクリプト
+LN6001-JP ver 1.x 向けに、Web管理画面のメニューを日本語化するためのスクリプトです。  
+日本語の基本翻訳に加え、DDNS / Firewall / OpenVPN / Software / UPnP の翻訳パッケージをインストールし、LuCIの既定言語を日本語、タイムゾーンを Asia/Tokyo に設定します。
+```
+curl -sS -o /tmp/jp_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/jp_setup.sh && sh /tmp/jp_setup.sh -v
+```
+
 ## ■ WDS子機として設定するスクリプト
 ２台のVelop WRT Pro 7を繋ぐための設定スクリプトです。6GHz帯をバックホールにしてWiFiを拡張する一番シンプルな方法です。  
 親機側の設定は特にありません。子機側にターミナルでSSH接続して、以下のスクリプトを実行してください。
@@ -23,6 +30,8 @@ curl -sS -o /tmp/adb_setup.sh https://raw.githubusercontent.com/ikm-san/velop/ma
 ```
 curl -sS -o /tmp/dumb_ap_setup.sh https://raw.githubusercontent.com/ikm-san/velop/main/dumb_ap_setup.sh && sh /tmp/dumb_ap_setup.sh -v
 ```
+
+
   
 ## ■ ターミナルへの入り方
 Terminalをまず起動する  
