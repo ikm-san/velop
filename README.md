@@ -1,6 +1,7 @@
 # OpenWrt | Linksys Velop WRT Pro 7 スクリプト集
 
-Velop WRT Pro 7にて動作検証済みのサンプルスクリプト集です。
+Velop WRT Pro 7 (LN6001/MBE70)にて動作検証済みのサンプルスクリプト集です。
+公式ファームウェアver1.2専用です。
   
 ## ■ LuCI日本語化スクリプト
 LN6001-JP ver 1.x 向けに、Web管理画面のメニューを日本語化するためのスクリプトです。  
